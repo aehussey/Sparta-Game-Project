@@ -1,0 +1,65 @@
+body {
+  background-color: green;
+}
+
+img {
+  height: 110px;
+  width: 72px;
+}
+
+div.card1, div.card2 {display: inline-block;}
+
+/* CLASSES */
+
+.bottom {margin-bottom: 100px;}
+
+
+.container {
+  background-color: white;
+  height: 900px;
+  width: 800px;
+  margin: auto;
+  margin-top: 100px;
+}
+
+.playPile {
+  margin: 50px;
+}
+
+.acePileLeft {
+  margin-left: 50px;
+  margin-right: 10px;
+  background-image: url("../images/card-images/2C.png");
+  background-size: cover;
+}
+
+.acePileRight {
+  margin-right: 50px;
+  margin-left: 10px;
+  background-image: url("../images/card-images/2C.png");
+  background-size: cover;
+}
+
+.solitairePile {
+  
+  background-image: url("../images/card-images/2C.png");
+  background-size: cover;
+}
+.card1 {
+
+  background-color: red;
+  height: 110px;
+
+
+}
+
+.card2 {
+  background-color: blue;
+  height: 110px;
+
+
+}
+
+/* .droparea:-moz-drag-over {
+  border: 1px solid black;
+} */
