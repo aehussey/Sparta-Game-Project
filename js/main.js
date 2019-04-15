@@ -3,24 +3,70 @@ $(function () {
 console.log("hello");
 
 class Deck {
-constructor() {
-  this.deck = [];
+  constructor() {
+    this.deck = [];
 
-  const suits = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
-  const values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
+    var suits = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
+    var values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
 
-  for (var suit in suits) {
-    for (var value in values) {
-      this.deck.push(`${values[value]} of ${suits[suit]}`);
+    for (var suit in suits) {
+      for (var value in values) {
+        this.deck.push(`${values[value]} of ${suits[suit]}`);
+      }
     }
   }
-}
+  shuffle() {
+    const deck = this.deck;
+    var m = deck.length, i;
+    while (m) {
+      i = Math.floor(Math.random() * m--);
+
+      [deck[m], deck[i]] = [deck[i], deck[m]];
+    }
+
+    return this;
+  }
+
+  createTalon(){
+    var talonArray = [];
+    for (var i = 0; i < 13; i++) {
+      talonArray.push(this.deck.pop())
+    }
+
+  return talonArray;
 }
 
-const deck1 = new Deck();
-console.log(deck1.deck);
-// ["Ace of Hearts", "2 of Hearts", "3 of Hearts", "4 of Hearts", "5 of Hearts", "6 of Hearts", "7 of Hearts", "8 of Hearts", "9 of Hearts", "10 of Hearts", "Jack of Hearts", "Queen of Hearts", "King of Hearts", "Ace of Spades", "2 of Spades", "3 of Spades", "4 of Spades", "5 of Spades", "6 of Spades", "7 of Spades", "8 of Spades", "9 of Spades", "10 of Spades", "Jack of Spades", "Queen of Spades", "King of Spades", "Ace of Clubs", "2 of Clubs", "3 of Clubs", "4 of Clubs", "5 of Clubs", "6 of Clubs", "7 of Clubs", "8 of Clubs", "9 of Clubs", "10 of Clubs", "Jack of Clubs", "Queen of Clubs", "King of Clubs", "Ace of Diamonds", "2 of Diamonds", "3 of Diamonds", "4 of Diamonds", "5 of Diamonds", "6 of Diamonds", "7 of Diamonds", "8 of Diamonds", "9 of Diamonds", "10 of Diamonds", "Jack of Diamonds", "Queen of Diamonds", "King of Diamonds"]
-const deck2 = new Deck();
-console.log(deck2.deck);
+  createStartMove () {
+    var startMoveArray = [];
+    for (var i = 0; i < 4; i++) {
+      startMoveArray.push(this.deck.pop())
+    }
 
+  return startMoveArray;
+
+  }
+
+  drawCard () {
+    return this.deck.pop();
+  }
+}
+
+
+
+$("#startGame").click(function(){
+  console.log("start game");
+  const deck1 = new Deck();
+  deck1.shuffle();
+  deck1.createStartMove()
+  console.log(deck1.createTalon());
+  console.log(deck1.deck);
+  // console.log(deck1.createTalon());
+  const deck2 = new Deck();
+  deck2.shuffle();
+  deck2.createStartMove()
+  console.log(deck2.createTalon());
+  console.log(deck2.deck);
+  // console.log(deck2.createTalon());
+
+})
 });
