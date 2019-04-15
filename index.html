@@ -3,35 +3,35 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
     <script
     src="https://code.jquery.com/jquery-3.4.0.min.js"
     integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
     crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="../js/main.js">
+    <script type="text/javascript" src="js/main.js">
     </script>
   </head>
   <body>
     <button type="button" id="startGame" class="btn btn-primary">Start Game</button>
-    <button type="button" id="dontPlay" class="btn btn-primary">Don't Play</button>
+
     <button type="button" id="endTurn" class="btn btn-primary">End Turn</button>
     <button type="button" id="callCravate" class="btn btn-primary">Cravate!</button>
     <div class="container">
 
       <div class="row">
-        <div class = "card2 col-xs-6">
-          <img src="../images/card-images/blue_back.png" alt="" >
+        <div id="player1Talon" class = "card2 col-xs-6">
+          <img src="images/card-images/blue_back.png" alt="" >
 
         </div>
 
         <div class = "card1 col-xs-3">
-          <img src="../images/card-images/blue_back.png" alt="" >
+          <img src="images/card-images/blue_back.png" alt="" >
 
         </div>
-        <div class="card2 col-xs-3">
-          <img src="../images/card-images/8H.png" alt="" >
+        <div id="player1FaceUp" class="card2 faceUpPile col-xs-3">
+
 
         </div>
       </div>
@@ -41,7 +41,7 @@
 
 
       <div class="row playPile">
-        <div class="col-xs-2 col-xs-offset-1 card1 solitairePile" >
+        <div class="col-xs-2 col-xs-offset-1 solitairePile solitairePileLeft" >
 
         </div>
         <div class="col-xs-2 acePileLeft card2">
@@ -52,13 +52,13 @@
         </div>
 
 
-        <div class="col-xs-2 card2 solitairePile">
+        <div class="col-xs-2 solitairePile solitairePileRight">
 
         </div>
       </div>
 
       <div class="row playPile">
-        <div class="col-xs-2 col-xs-offset-1 card1 solitairePile ">
+        <div class="col-xs-2 col-xs-offset-1 solitairePile solitairePileLeft ">
 
         </div>
         <div class="col-xs-2  acePileLeft card2">
@@ -67,12 +67,12 @@
         <div class="col-xs-2 acePileRight card1">
 
         </div>
-        <div class="col-xs-2 card2 solitairePile">
+        <div class="col-xs-2 solitairePile solitairePileRight">
 
         </div>
       </div>
       <div class="row playPile">
-        <div class="col-xs-2 col-xs-offset-1 card1 solitairePile">
+        <div class="col-xs-2 col-xs-offset-1 solitairePile solitairePileLeft">
 
         </div>
         <div class="col-xs-2 acePileLeft card2">
@@ -81,12 +81,12 @@
         <div class="col-xs-2 acePileRight card1">
 
         </div>
-        <div class="col-xs-2 card2 solitairePile">
+        <div class="col-xs-2 solitairePile solitairePileRight">
 
         </div>
       </div>
       <div class="row playPile">
-        <div class="col-xs-2 col-xs-offset-1 card1 solitairePile">
+        <div class="col-xs-2 col-xs-offset-1 solitairePile solitairePileLeft">
 
         </div>
         <div class="col-xs-2 acePileLeft card2">
@@ -95,22 +95,22 @@
         <div class="col-xs-2 acePileRight card1">
 
         </div>
-        <div class="col-xs-2 card2 solitairePile">
+        <div class="col-xs-2 solitairePile solitairePileRight">
 
         </div>
       </div>
 
       <div class="row bottom">
-        <div class = "card1 col-xs-3">
-          <img src="../images/card-images/8H.png" alt="">
+        <div id="player2Talon" class = "card1 col-xs-6">
+          <img src="images/card-images/grey_back.png" alt="" >
         </div>
         <div class="card2 col-xs-3" >
-          <img src="../images/card-images/blue_back.png" alt="" >
+          <img src="images/card-images/grey_back.png" alt="" >
 
         </div>
 
-        <div class="card1 col-xs-6">
-          <img src="../images/card-images/blue_back.png" alt="">
+        <div id="player2FaceUp" class="card1  col-xs-3">
+
 
         </div>
       </div>
