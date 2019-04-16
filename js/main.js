@@ -2,7 +2,7 @@ $(function () {
 
 console.log("hello");
 
-
+//  FUNCTIONS
 
 function drawStarterCardsLeft(createStartMove) {
   for (var i = 0; i < createStartMove.length; i++) {
@@ -36,10 +36,26 @@ function drawCardPlayer2(card) {
 
 }
 
+function drawTalonCard(talonArray) {
+
+  return talonArray.pop();
+
+}
 function player1Talon(card) {
   $("#player1Talon").append('<img src="images/card-images/' + card + '.png">');
-  $("player1Talon img").addClass("cardPile");
+  $("#player1Talon img").addClass("cardPile");
 }
+
+function player2Talon(card) {
+  $("#player2Talon").append('<img src="images/card-images/' + card + '.png">');
+  $("#player2Talon img").addClass("cardPile");
+}
+
+
+
+// DECK OF CARDS
+
+
 
 class Deck {
   constructor() {
@@ -75,10 +91,7 @@ class Deck {
   return talonArray;
 }
 
-  drawCardTalon () {
-    return talonArray.pop();
-    console.log(talonArray.pop());
-  }
+
 
   createStartMove () {
     var startMoveArray = [];
@@ -95,7 +108,7 @@ class Deck {
   }
 }
 
-
+// CLICKS AND BUTTONS
 
   $("#startGame").click(function(){
 
@@ -108,37 +121,65 @@ class Deck {
     drawFirstCard (deck1.drawCard(), deck2.drawCard())
 
     drawStarterCardsLeft(deck1.createStartMove())
-    console.log(deck1.createTalon());
+    talon1 = deck1.createTalon();
     console.log(deck1.deck);
 
 
     drawStarterCardsRight(deck2.createStartMove())
-    console.log(deck2.createTalon());
+    talon2 = deck2.createTalon();
     console.log(deck2.deck);
 
 
     $("#startGame").hide();
 
+    turn = "X"
 
 
-  })
+  });
 
 
   $("#player1FaceUp").click(function () {
-    drawCardPlayer1(deck1.drawCard())
-    console.log(deck1.deck);
+    if (turn == "X") {
+      drawCardPlayer1(deck1.drawCard())
+      console.log(deck1.deck);
+    }
+
   })
 
   $("#player2FaceUp").click(function () {
-    drawCardPlayer2(deck2.drawCard())
-    console.log(deck2.deck);
-  })
+    if (turn == "Y") {
+      drawCardPlayer2(deck2.drawCard())
+      console.log(deck2.deck);
+    }
+
+  });
 
 
-$("#player1Talon").click(function () {
-  player1Talon(deck1.createTalon())
 
-})
+  $("#player1Talon").click(function () {
+    if ($("#player1Talon img").length <= 1 && turn == "X") {
+
+    // drawTalonCard(deck1.createTalon());
+    console.log($("#player1Talon").length); // why does this not repeat when i press
+
+    player1Talon(drawTalonCard(talon1));
+    console.log(talon1);
+  }
+
+  });
+
+  $("#player2Talon").click(function () {
+    if ($("#player2Talon img").length <= 1 && turn == "Y") {
+
+    // drawTalonCard(deck1.createTalon());
+    console.log($("#player2Talon").length); // why does this not repeat when i press
+
+    player2Talon(drawTalonCard(talon2));
+    console.log(talon2);
+  }
+
+  });
+
 
 $("#endTurn").click(function () {
   console.log("End Turn");
