@@ -18,7 +18,7 @@ div.card1, div.card2 {display: inline-block;}
 .container {
   background-color: white;
   height: 910px;
-  width: 800px;
+  width: 1000px;
   margin: auto;
   margin-top: 100px;
 }
@@ -27,24 +27,42 @@ div.card1, div.card2 {display: inline-block;}
   margin: 50px;
 }
 
+
+
+ div .offsetLeft{
+   position: absolute;
+   right:25px;
+}
+
+div .noOffset{
+  position: absolute;
+
+}
+
+.firstCardLeft {
+ /* z-index: 0; */
+ position: absolute;
+ right:17px;
+}
+
 .acePileLeft {
-  margin-left: 50px;
-  margin-right: 10px;
-  background-image: url("../images/card-images/2C.png");
-  background-size: cover;
+  /* margin-left: 50px;
+  margin-right: 10px; */
+  /* background-image: url("../images/card-images/2C.png"); */
+  /* background-size: cover; */
 }
 
 .acePileRight {
-  margin-right: 50px;
-  margin-left: 10px;
-  background-image: url("../images/card-images/2C.png");
-  background-size: cover;
+  /* margin-right: 50px;
+  margin-left: 10px; */
+  /* background-image: url("../images/card-images/2C.png"); */
+  /* background-size: cover; */
 }
 
 .solitairePile {
 
-  background-image: url("../images/card-images/2C.png");
-  background-size: cover;
+  /* background-image: url("../images/card-images/2C.png");
+  background-size: cover; */
 }
 .card1 {
   border: red 2px solid;
