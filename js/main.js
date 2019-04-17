@@ -1,6 +1,6 @@
 $(function () {
 
-console.log("hello");
+
 
 //  FUNCTIONS
 
@@ -23,10 +23,7 @@ function drawStarterCardsRight(createStartMove) {
   }
 }
 
-function drawFirstCard(card1, card2) {
-  $("#player1FaceUp").append('<img src="images/card-images/' + card1 + '.png">');
-  $("#player2FaceUp").append('<img src="images/card-images/' + card2 + '.png">');
-}
+
 
 function drawCardPlayer1(card) {
   $("#player1FaceUp").append('<img src="images/card-images/' + card + '.png">');
@@ -60,7 +57,10 @@ function splitDeck (deck) {
   for (var i = 0; i < deck.length; i++) {
   // deckArray.push();
   var cards = deck[i].split("-");
-  deckArray.push(cards)
+  var starterCard = []
+  var starterArray = starterCard.push(cards)
+
+  deckArray.push(starterCard);
 }
 return deckArray;
 }
@@ -148,86 +148,89 @@ class Deck {
     deck2 = new Deck();
     deck2.shuffle();
 
-    // console.log(deck1.deck);
-
-
-//Draw 1st card
-
-    var pOneFirstCard = deck1.drawCard()
-    var pOneNewCard = splitCard (pOneFirstCard)
-    console.log(pOneNewCard);
-
-
-    var pTwoFirstCard = deck2.drawCard()
-    var pTwoNewCard = splitCard (pTwoFirstCard)
-    console.log(pTwoNewCard);
-
-
-
-    drawFirstCard (pOneFirstCard, pTwoFirstCard)
-
     var pOneStart = deck1.createStartMove()
 
 
-    pOneNewDeck = splitDeck(pOneStart)
-    console.log(pOneNewDeck);
-
-
-    console.log(pOneNewDeck);
+    splitArrayLeft = splitDeck(pOneStart)
+    // console.log(splitArrayLeft);
+    // console.log("here");
+    //
+    //
+    // console.log(splitArrayLeft)
 
 
     drawStarterCardsLeft(pOneStart)
     talon1 = deck1.createTalon();
-    // console.log(talon1);
-    // console.log(deck1.deck);
 
-    // console.log(splitTalon1);
-
-
-    // drawStarterCardsRight(deck2.createStartMove())
-    // talon2 = deck2.createTalon();
-    // console.log(deck2.deck);
 
     var pTwoStart = deck2.createStartMove()
 
-    pTwoNewDeck = splitDeck(pTwoStart)
-    console.log(pTwoNewDeck);
+    splitArrayRight = splitDeck(pTwoStart)
+    // console.log(splitArrayRight);
 
 
     drawStarterCardsRight(pTwoStart)
     talon2 = deck2.createTalon();
-    // console.log(talon2);
-    // console.log(deck2.deck);
+
 
 
     $("#startGame").hide();
 
     turn = "X"
-    // console.log($("#player1FaceUp img:last-child"));
-
-    // console.log([talon1 + deck1.deck])
 
 
+    function play(deck, player) {
+      var pOneDraw = deck.drawCard();
+      player(pOneDraw)
+      var pOneNewCard = splitCard(pOneDraw)
+
+      return pOneNewCard
+
+
+    }
 
 //  CLICK FUNCTIONS
 
   $("#player1FaceDown").click(function () {
     if (turn == "X") {
-      var pOneDraw = deck1.drawCard();
-      drawCardPlayer1(pOneDraw)
-      var pOneFlipCard = splitCard(pOneDraw)
-      console.log(pOneFlipCard);
+
+    var drawnCardSplit = play(deck1, drawCardPlayer1)
+    console.log(drawnCardSplit);
+
     }
 
+    var aceArray = [[],[],[],[],[],[],[],[]]
 
-  })
+
+  $("#player1FaceUp").click(function () {
+
+    playerTurnLeftArray(1, "solitairePile", "FaceUp", splitArrayLeft, splitArrayRight, drawnCardSplit);
+    playerTurnRightArray(1, "solitairePile", "FaceUp", splitArrayLeft, splitArrayRight, drawnCardSplit);
+    playerTurnAcePile(1, "acePile", "FaceUp", aceArray, drawnCardSplit)
+
+
+    $("#player1FaceUp").off("click")
+
+  });
+})
 
   $("#player2FaceDown").click(function () {
     if (turn == "Y") {
-      drawCardPlayer2(deck2.drawCard())
-      console.log(deck2.deck);
+      console.log(turn);
+      var drawnCardSplit = play(deck2, drawCardPlayer2)
+      console.log(drawnCardSplit);
     }
 
+
+    $("#player2FaceUp").click(function () {
+
+      playerTurnLeftArray(2, "solitairePile", "FaceUp", splitArrayLeft, splitArrayRight, drawnCardSplit);
+      playerTurnRightArray(2, "solitairePile", "FaceUp", splitArrayLeft, splitArrayRight, drawnCardSplit);
+
+
+      $("#player2FaceUp").off("click")
+
+    });
   });
 
 
@@ -235,365 +238,684 @@ class Deck {
 
 
 
-  $("#player1Talon").click(function () {
-    if ($("#player1Talon img").length <= 1 && turn == "X") {
-
-
-    console.log($("#player1Talon").length);
-
-    player1Talon(drawTalonCard(talon1));
-    console.log(talon1);
-  }
-
-  });
-
-  $("#player2Talon").click(function () {
-    if ($("#player2Talon img").length <= 1 && turn == "Y") {
-
-    player2Talon(drawTalonCard(talon2));
-    console.log(talon2);
-  }
-
-  });
-
-
-
+  // $("#player1Talon").click(function () {
+  //   if ($("#player1Talon img").length < 2 && turn == "X") {
+  //
+  //
+  //   console.log($("#player1Talon").length);
+  //   var talonCard = drawTalonCard(talon1)
+  //   player1Talon(talonCard);
+  //   var pOneNewTalonCard = splitCard(talonCard)
+  //   console.log(pOneNewTalonCard);
+  //   player1turn (1, "solitairePile", "Talon", splitArrayLeft, splitArrayRight, pOneNewTalonCard)
+  //   player1turn (1, "acePile", "Talon", splitArrayLeft, splitArrayRight, pOneNewTalonCard)
   // }
+  //
+  // });
+  //
+  // $("#player2Talon").click(function () {
+  //   if ($("#player2Talon img").length <= 1 && turn == "Y") {
+  //
+  //     var talonCard = drawTalonCard(talon2)
+  //     player2Talon(talonCard);
+  //     var pOneNewTalonCard = splitCard(talonCard)
+  //     console.log(pOneNewTalonCard);
+  //     player1turn (2, "solitairePile", "Talon", splitArrayLeft, splitArrayRight, pOneNewTalonCard)
+  //     player1turn (2, "acePile", "Talon", splitArrayLeft, splitArrayRight, pOneNewTalonCard)
+  // }
+  //
+  // });
+
+
+
+
 
 
   // PLAYER 1 LEFT HAND SIDE
-  $("#player1FaceUp").click(function () {
 
-    if (pOneNewDeck[0][0] - pOneNewCard[0] == 1 && ((pOneNewDeck[0][2] == "Clubs" || pOneNewDeck[0][2] == "Spades") && (pOneNewCard[2] == "Diamonds" || pOneNewCard[2] == "Hearts") || (pOneNewDeck[0][2] == "Hearts" || pOneNewDeck[0][2] == "Diamonds") && (pOneNewCard[2] == "Clubs" || pOneNewCard[2] == "Spades"))) {
 
-      $("#solitairePile1").click(function () {
 
-        $('#solitairePile1').append( $('#player1FaceUp>img:last-child') );
-        $('#solitairePile1 img').removeClass("cardPile")
+
+    function playerTurnLeftArray(playerTurn, id, pileType, splitArrayLeft, splitArrayRight, splitCard) {
+
+
+    if (id == "solitairePile" && ((splitArrayLeft[0][splitArrayLeft[0].length - 1][0]) - splitCard[0] == 1 && ((splitArrayLeft[0][splitArrayLeft[0].length - 1][2] == "Clubs" || splitArrayLeft[0][splitArrayLeft[0].length - 1][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayLeft[0][splitArrayLeft[0].length - 1][2] == "Hearts" || splitArrayLeft[0][splitArrayLeft[0].length - 1][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades")))) {
+
+      $("#" + id + "1").click(function () {
+
+        $('#' + id + '1').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '1 img').removeClass("cardPile")
         // $('#solitairePile1 img').css("z-index", "1")
-        pOneNewDeck[0] = pOneNewCard;
-        console.log(pOneNewDeck[0]);
-        $('#solitairePile1 img').addClass("offsetLeft")
+        splitArrayLeft[0].push(splitCard)
+        // console.log(splitArrayLeft[0][splitArrayLeft[0].length - 1]);
+        // console.log(splitArrayLeft[0]);
+        // console.log(splitArrayLeft);
+        $('#' + id + '1 img').addClass("offsetLeft")
+        $("#" + id + "1").off("click");
+      });
+    }
+
+    else if (id == "solitairePile" && ((splitArrayLeft[1][splitArrayLeft[1].length - 1][0]) - splitCard[0] == 1 && ((splitArrayLeft[1][splitArrayLeft[1].length - 1][2] == "Clubs" || splitArrayLeft[1][splitArrayLeft[1].length - 1][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayLeft[1][splitArrayLeft[1].length - 1][2] == "Hearts" || splitArrayLeft[1][splitArrayLeft[1].length - 1][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades")))) {
+
+
+      $("#" + id + "3").click(function () {
+
+        $('#' + id + '3').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '3 img').removeClass("cardPile")
+        // $('#solitairePile1 img').css("z-index", "1")
+        splitArrayLeft[1].push(splitCard)
+
+        $('#' + id + '3 img').addClass("offsetLeft")
+        $("#" + id + "3").off("click");
+
       })
     }
 
-    $("#player1FaceUp").off("click")
+    else if ((splitArrayLeft[2][splitArrayLeft[2].length - 1][0]) - splitCard[0] == 1 && ((splitArrayLeft[2][splitArrayLeft[2].length - 1][2] == "Clubs" || splitArrayLeft[2][splitArrayLeft[2].length - 1][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayLeft[2][splitArrayLeft[2].length - 1][2] == "Hearts" || splitArrayLeft[2][splitArrayLeft[2].length - 1][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades"))) {
 
-  })
+      $("#" + id + "5").click(function () {
 
-  $("#player1FaceUp").click(function () {
-
-    if (pOneNewDeck[1][0] - pOneNewCard[0] == 1 && ((pOneNewDeck[1][2] == "Clubs" || pOneNewDeck[1][2] == "Spades") && (pOneNewCard[2] == "Diamonds" || pOneNewCard[2] == "Hearts") || (pOneNewDeck[1][2] == "Hearts" || pOneNewDeck[1][2] == "Diamonds") && (pOneNewCard[2] == "Clubs" || pOneNewCard[2] == "Spades"))) {
-
-      $("#solitairePile3").click(function () {
-
-        $('#solitairePile3').append( $('#player1FaceUp>img:last-child') );
-        $('#solitairePile3 img').removeClass("cardPile")
+        $('#' + id + '5').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '5 img').removeClass("cardPile")
         // $('#solitairePile1 img').css("z-index", "1")
-        pOneNewDeck[1] = pOneNewCard;
-        console.log(pOneNewDeck[1]);
-        $('#solitairePile3 img').addClass("offsetLeft")
+        splitArrayLeft[2].push(splitCard)
+        console.log(splitArrayLeft[2]);
+        $('#' + id + '5 img').addClass("offsetLeft")
+        $("#" + id + "5").off("click");
+
+
       })
     }
 
-    $("#player1FaceUp").off("click")
+    else if ((splitArrayLeft[3][splitArrayLeft[3].length - 1][0]) - splitCard[0] == 1 && ((splitArrayLeft[3][splitArrayLeft[3].length - 1][2] == "Clubs" || splitArrayLeft[3][splitArrayLeft[3].length - 1][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayLeft[3][splitArrayLeft[3].length - 1][2] == "Hearts" || splitArrayLeft[3][splitArrayLeft[3].length - 1][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades"))) {
 
-  })
+      $("#" + id + "7").click(function () {
 
-  $("#player1FaceUp").click(function () {
-
-    if (pOneNewDeck[2][0] - pOneNewCard[0] == 1 && ((pOneNewDeck[2][2] == "Clubs" || pOneNewDeck[2][2] == "Spades") && (pOneNewCard[2] == "Diamonds" || pOneNewCard[2] == "Hearts") || (pOneNewDeck[2][2] == "Hearts" || pOneNewDeck[2][2] == "Diamonds") && (pOneNewCard[2] == "Clubs" || pOneNewCard[2] == "Spades"))) {
-
-      $("#solitairePile5").click(function () {
-
-        $('#solitairePile5').append( $('#player1FaceUp>img:last-child') );
-        $('#solitairePile5 img').removeClass("cardPile")
+        $('#' + id + '7').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '7 img').removeClass("cardPile")
         // $('#solitairePile1 img').css("z-index", "1")
-        pOneNewDeck[2] = pOneNewCard;
-        console.log(pOneNewDeck[2]);
-        $('#solitairePile5 img').addClass("offsetLeft")
+        splitArrayLeft[3].push(splitCard)
+        console.log(splitArrayLeft[3]);
+        $('#' + id + '7 img').addClass("offsetLeft")
+        $("#" + id + "7").off("click");
+
+      })
+    }
+    return splitArrayLeft
+    }
+
+    function playerTurnRightArray(playerTurn, id, pileType, splitArrayLeft, splitArrayRight, splitCard) {
+
+
+    if (id == "solitairePile" && (splitArrayRight[0][splitArrayRight[0].length - 1][0] - splitCard[0] == 1 && ((splitArrayRight[0][splitArrayRight[0].length - 1][2] == "Clubs" || splitArrayRight[0][splitArrayRight[0].length - 1][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayRight[0][splitArrayRight[0].length - 1][2] == "Hearts" || splitArrayRight[0][splitArrayRight[0].length - 1][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades")))) {
+
+      $("#" + id + "2").click(function () {
+
+        $('#' + id + '2').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '2 img').removeClass("cardPile")
+        // $('#solitairePile1 img').css("z-index", "1")
+        splitArrayLeft[0].push(splitCard)
+        // console.log(splitArrayLeft[0][splitArrayLeft[0].length - 1]);
+        // console.log(splitArrayLeft[0]);
+        // console.log(splitArrayLeft);
+        $('#' + id + '2 img').addClass("noOffset")
+        $("#" + id + "2").off("click");
+      });
+    }
+
+    else if (splitArrayRight[1][splitArrayRight[1].length - 1][0] - splitCard[0] == 1 && ((splitArrayRight[1][splitArrayRight[1].length - 1][2] == "Clubs" || splitArrayRight[1][splitArrayRight[1].length - 1][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayRight[1][splitArrayRight[1].length - 1][2] == "Hearts" || splitArrayRight[1][splitArrayRight[1].length - 1][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades"))) {
+
+      $("#" + id + "4").click(function () {
+
+        $('#' + id + '4').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '4 img').removeClass("cardPile")
+        // $('#solitairePile1 img').css("z-index", "1")
+        splitArrayRight[1].push(splitCard)
+        console.log(splitArrayRight[1]);
+        $('#' + id + '4 img').addClass("noOffset")
+        $("#" + id + "4").off("click");
+
       })
     }
 
-    $("#player1FaceUp").off("click")
+    else if (splitArrayRight[2][splitArrayRight[2].length - 1][0] - splitCard[0] == 1 && ((splitArrayRight[2][splitArrayRight[2].length - 1][2] == "Clubs" || splitArrayRight[2][splitArrayRight[2].length - 1][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayRight[2][splitArrayRight[2].length - 1][2] == "Hearts" || splitArrayRight[2][splitArrayRight[2].length - 1][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades"))) {
 
-  })
+      $("#" + id + "6").click(function () {
 
-  $("#player1FaceUp").click(function () {
-
-    if (pOneNewDeck[3][0] - pOneNewCard[0] == 1 && ((pOneNewDeck[3][2] == "Clubs" || pOneNewDeck[3][2] == "Spades") && (pOneNewCard[2] == "Diamonds" || pOneNewCard[2] == "Hearts") || (pOneNewDeck[3][2] == "Hearts" || pOneNewDeck[3][2] == "Diamonds") && (pOneNewCard[2] == "Clubs" || pOneNewCard[2] == "Spades"))) {
-
-      $("#solitairePile7").click(function () {
-
-        $('#solitairePile7').append( $('#player1FaceUp>img:last-child') );
-        $('#solitairePile7 img').removeClass("cardPile")
+        $('#' + id + '6').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '6 img').removeClass("cardPile")
         // $('#solitairePile1 img').css("z-index", "1")
-        pOneNewDeck[3] = pOneNewCard;
-        console.log(pOneNewDeck[3]);
-        $('#solitairePile7 img').addClass("offsetLeft")
+        splitArrayRight[2].push(splitCard)
+        console.log(splitArrayRight[2]);
+        $('#' + id + '6 img').addClass("noOffset")
+        $("#" + id + "6").off("click");
+
+
       })
     }
 
-    $("#player1FaceUp").off("click")
+    else if (splitArrayRight[3][splitArrayRight[3].length - 1][0] - splitCard[0] == 1 && ((splitArrayRight[3][splitArrayRight[3].length - 1][2] == "Clubs" || splitArrayRight[3][splitArrayRight[3].length - 1][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayRight[3][splitArrayRight[3].length - 1][2] == "Hearts" || splitArrayRight[3][splitArrayRight[3].length - 1][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades"))) {
 
-  })
+      $("#" + id + "8").click(function () {
 
-
-  // PLAYER 1 RIGHT HAND SIDE
-
-  $("#player1FaceUp").click(function () {
-
-    if (pTwoNewDeck[0][0] - pOneNewCard[0] == 1 && ((pTwoNewDeck[0][2] == "Clubs" || pTwoNewDeck[0][2] == "Spades") && (pOneNewCard[2] == "Diamonds" || pOneNewCard[2] == "Hearts") || (pTwoNewDeck[0][2] == "Hearts" || pTwoNewDeck[0][2] == "Diamonds") && (pOneNewCard[2] == "Clubs" || pOneNewCard[2] == "Spades"))) {
-
-    $("#solitairePile2").click(function () {
-
-      $('#solitairePile2').append( $('#player1FaceUp>img:last-child') );
-      $('#solitairePile2 img').removeClass("cardPile")
-      // $('#solitairePile1 img').css("z-index", "1")
-      pTwoNewDeck[0] = pOneNewCard;
-      console.log(pTwoNewDeck[0]);
-      $('#solitairePile2 img').addClass("noOffset")
-    })
-  }
-
-    $("#player1FaceUp").off("click")
-  })
-
-  $("#player1FaceUp").click(function () {
-
-    if (pTwoNewDeck[1][0] - pOneNewCard[0] == 1 && ((pTwoNewDeck[1][2] == "Clubs" || pTwoNewDeck[1][2] == "Spades") && (pOneNewCard[2] == "Diamonds" || pOneNewCard[2] == "Hearts") || (pTwoNewDeck[1][2] == "Hearts" || pTwoNewDeck[1][2] == "Diamonds") && (pOneNewCard[2] == "Clubs" || pOneNewCard[2] == "Spades"))) {
-
-    $("#solitairePile4").click(function () {
-
-      $('#solitairePile4').append( $('#player1FaceUp>img:last-child') );
-      $('#solitairePile4 img').removeClass("cardPile")
-      // $('#solitairePile1 img').css("z-index", "1")
-      pTwoNewDeck[1] = pOneNewCard;
-      console.log(pTwoNewDeck[1]);
-      $('#solitairePile4 img').addClass("noOffset")
-    })
-  }
-
-    $("#player1FaceUp").off("click")
-  })
-
-  $("#player1FaceUp").click(function () {
-
-    if (pTwoNewDeck[2][0] - pOneNewCard[0] == 1 && ((pTwoNewDeck[2][2] == "Clubs" || pTwoNewDeck[2][2] == "Spades") && (pOneNewCard[2] == "Diamonds" || pOneNewCard[2] == "Hearts") || (pTwoNewDeck[2][2] == "Hearts" || pTwoNewDeck[2][2] == "Diamonds") && (pOneNewCard[2] == "Clubs" || pOneNewCard[2] == "Spades"))) {
-
-    $("#solitairePile6").click(function () {
-
-      $('#solitairePile6').append( $('#player1FaceUp>img:last-child') );
-      $('#solitairePile6 img').removeClass("cardPile")
-      pTwoNewDeck[2] = pOneNewCard;
-      console.log(pTwoNewDeck[2]);
-      // $('#solitairePile1 img').css("z-index", "1")
-      $('#solitairePile6 img').addClass("noOffset")
-    })
-  }
-
-    $("#player1FaceUp").off("click")
-  })
-
-  $("#player1FaceUp").click(function () {
-
-    if (pTwoNewDeck[3][0] - pOneNewCard[0] == 1 && ((pTwoNewDeck[3][2] == "Clubs" || pTwoNewDeck[3][2] == "Spades") && (pOneNewCard[2] == "Diamonds" || pOneNewCard[2] == "Hearts") || (pTwoNewDeck[3][2] == "Hearts" || pTwoNewDeck[3][2] == "Diamonds") && (pOneNewCard[2] == "Clubs" || pOneNewCard[2] == "Spades"))) {
-
-    $("#solitairePile8").click(function () {
-
-      $('#solitairePile8').append( $('#player1FaceUp>img:last-child') );
-      $('#solitairePile8 img').removeClass("cardPile")
-      // $('#solitairePile1 img').css("z-index", "1")
-      pTwoNewDeck[3] = pOneNewCard;
-      console.log(pTwoNewDeck[3]);
-      $('#solitairePile8 img').addClass("noOffset")
-    })
-  }
-
-    $("#player1FaceUp").off("click")
-  })
-
-  // PLAYER 2 LEFT HAND SIDE
-  $("#player2FaceUp").click(function () {
-
-    if (pOneNewDeck[0][0] - pTwoNewCard[0] == 1 && ((pOneNewDeck[0][2] == "Clubs" || pOneNewDeck[0][2] == "Spades") && (pTwoNewCard[2] == "Diamonds" || pTwoNewCard[2] == "Hearts") || (pOneNewDeck[0][2] == "Hearts" || pOneNewDeck[0][2] == "Diamonds") && (pTwoNewCard[2] == "Clubs" || pTwoNewCard[2] == "Spades"))) {
-
-      $("#solitairePile1").click(function () {
-
-        $('#solitairePile1').append( $('#player2FaceUp>img:last-child') );
-        $('#solitairePile1 img').removeClass("cardPile")
+        $('#' + id + '8').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '8 img').removeClass("cardPile")
         // $('#solitairePile1 img').css("z-index", "1")
-        pOneNewDeck[0] = pTwoNewCard;
-        console.log(pOneNewDeck[0]);
-        $('#solitairePile1 img').addClass("offsetLeft")
+        splitArrayRight[3].push(splitCard)
+        console.log(splitArrayRight[3]);
+        $('#' + id + '8 img').addClass("noOffset")
+        $("#" + id + "8").off("click");
+
       })
     }
-
-    $("#player2FaceUp").off("click")
-
-  })
-
-  $("#player2FaceUp").click(function () {
-
-    if (pOneNewDeck[1][0] - pTwoNewCard[0] == 1 && ((pOneNewDeck[1][2] == "Clubs" || pOneNewDeck[1][2] == "Spades") && (pTwoNewCard[2] == "Diamonds" || pTwoNewCard[2] == "Hearts") || (pOneNewDeck[1][2] == "Hearts" || pOneNewDeck[1][2] == "Diamonds") && (pTwoNewCard[2] == "Clubs" || pTwoNewCard[2] == "Spades"))) {
-
-      $("#solitairePile3").click(function () {
-
-        $('#solitairePile3').append( $('#player2FaceUp>img:last-child') );
-        $('#solitairePile3 img').removeClass("cardPile")
-        // $('#solitairePile1 img').css("z-index", "1")
-        pOneNewDeck[1] = pTwoNewCard;
-        console.log(pOneNewDeck[1]);
-        $('#solitairePile3 img').addClass("offsetLeft")
-      })
+    return splitArrayRight
     }
 
-    $("#player2FaceUp").off("click")
 
-  })
 
-  $("#player2FaceUp").click(function () {
+    function playerTurnAcePile(playerTurn, id, pileType, aceArray, splitCard) {
 
-    if (pOneNewDeck[2][0] - pTwoNewCard[0] == 1 && ((pOneNewDeck[2][2] == "Clubs" || pOneNewDeck[2][2] == "Spades") && (pTwoNewCard[2] == "Diamonds" || pTwoNewCard[2] == "Hearts") || (pOneNewDeck[2][2] == "Hearts" || pOneNewDeck[2][2] == "Diamonds") && (pTwoNewCard[2] == "Clubs" || pTwoNewCard[2] == "Spades"))) {
 
-      $("#solitairePile5").click(function () {
+    if (id == "acePile" && ($("#" + id + "1 img").length == 0) && splitCard[0] == 1) {
 
-        $('#solitairePile5').append( $('#player2FaceUp>img:last-child') );
-        $('#solitairePile5 img').removeClass("cardPile")
+      $("#" + id + "1").click(function () {
+
+        $('#' + id + '1').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '1 img').removeClass("cardPile")
         // $('#solitairePile1 img').css("z-index", "1")
-        pOneNewDeck[2] = pTwoNewCard;
-        console.log(pOneNewDeck[2]);
-        $('#solitairePile5 img').addClass("offsetLeft")
-      })
+        // splitArrayLeft[0].push(splitCard)
+        aceArray[0].push(splitCard);
+
+        // console.log(aceArray);
+        // console.log(splitArrayLeft[0][splitArrayLeft[0].length - 1]);
+        // console.log(splitArrayLeft[0]);
+        // console.log(splitArrayLeft);
+        $('#' + id + '1 img').addClass("offsetLeft")
+        $("#" + id + "1").off("click");
+      });
     }
 
-    $("#player2FaceUp").off("click")
 
-  })
+    else if (id == "acePile" && ($("#" + id + "2 img").length == 0) && splitCard[0] == 1) {
 
-  $("#player2FaceUp").click(function () {
+      $("#" + id + "2").click(function () {
 
-    if (pOneNewDeck[3][0] - pTwoNewCard[0] == 1 && ((pOneNewDeck[3][2] == "Clubs" || pOneNewDeck[3][2] == "Spades") && (pTwoNewCard[2] == "Diamonds" || pTwoNewCard[2] == "Hearts") || (pOneNewDeck[3][2] == "Hearts" || pOneNewDeck[3][2] == "Diamonds") && (pTwoNewCard[2] == "Clubs" || pTwoNewCard[2] == "Spades"))) {
-
-      $("#solitairePile7").click(function () {
-
-        $('#solitairePile7').append( $('#player2FaceUp>img:last-child') );
-        $('#solitairePile7 img').removeClass("cardPile")
+        $('#' + id + '2').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '2 img').removeClass("cardPile")
         // $('#solitairePile1 img').css("z-index", "1")
-        pOneNewDeck[3] = pTwoNewCard;
-        console.log(pOneNewDeck[3]);
-        $('#solitairePile7 img').addClass("offsetLeft")
-      })
+        // splitArrayLeft[0].push(splitCard)
+        aceArray[1].push(splitCard);
+
+        // console.log(aceArray);
+        // console.log(splitArrayLeft[0][splitArrayLeft[0].length - 1]);
+        // console.log(splitArrayLeft[0]);
+        // console.log(splitArrayLeft);
+        $('#' + id + '2 img').addClass("offsetLeft")
+        $("#" + id + "2").off("click");
+      });
     }
 
-    $("#player2FaceUp").off("click")
+    else if (id == "acePile" && ($("#" + id + "3 img").length == 0) && splitCard[0] == 1) {
 
-  })
+      $("#" + id + "3").click(function () {
+
+        $('#' + id + '3').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '3 img').removeClass("cardPile")
+        // $('#solitairePile1 img').css("z-index", "1")
+        // splitArrayLeft[0].push(splitCard)
+        aceArray[2].push(splitCard);
+
+        // console.log(aceArray);
+        // console.log(splitArrayLeft[0][splitArrayLeft[0].length - 1]);
+        // console.log(splitArrayLeft[0]);
+        // console.log(splitArrayLeft);
+        $('#' + id + '3 img').addClass("offsetLeft")
+        $("#" + id + "3").off("click");
+      });
+    }
 
 
+    else if (id == "acePile" && ($("#" + id + "4 img").length == 0) && splitCard[0] == 1) {
 
-  // PLAYER 2 RIGHT HAND SIDE
+      $("#" + id + "4").click(function () {
 
-  $("#player2FaceUp").click(function () {
+        $('#' + id + '4').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '4 img').removeClass("cardPile")
+        // $('#solitairePile1 img').css("z-index", "1")
+        // splitArrayLeft[0].push(splitCard)
+        aceArray[3].push(splitCard);
 
-    if (pTwoNewDeck[0][0] - pTwoNewCard[0] == 1 && ((pTwoNewDeck[0][2] == "Clubs" || pTwoNewDeck[0][2] == "Spades") && (pTwoNewCard[2] == "Diamonds" || pTwoNewCard[2] == "Hearts") || (pTwoNewDeck[0][2] == "Hearts" || pTwoNewDeck[0][2] == "Diamonds") && (pTwoNewCard[2] == "Clubs" || pTwoNewCard[2] == "Spades"))) {
+        // console.log(aceArray);
+        // console.log(splitArrayLeft[0][splitArrayLeft[0].length - 1]);
+        // console.log(splitArrayLeft[0]);
+        // console.log(splitArrayLeft);
+        $('#' + id + '4 img').addClass("offsetLeft")
+        $("#" + id + "4").off("click");
+      });
+    }
 
-    $("#solitairePile2").click(function () {
 
-      $('#solitairePile2').append( $('#player2FaceUp>img:last-child') );
-      $('#solitairePile2 img').removeClass("cardPile")
-      // $('#solitairePile1 img').css("z-index", "1")
-      pTwoNewDeck[0] = pTwoNewCard;
-      console.log(pTwoNewDeck[0]);
-      $('#solitairePile2 img').addClass("noOffset")
-    })
+    else if (id == "acePile" && ($("#" + id + "5 img").length == 0) && splitCard[0] == 1) {
+
+      $("#" + id + "5").click(function () {
+
+        $('#' + id + '5').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '5 img').removeClass("cardPile")
+        // $('#solitairePile1 img').css("z-index", "1")
+        // splitArrayLeft[0].push(splitCard)
+        aceArray[4].push(splitCard);
+
+        // console.log(aceArray);
+        // console.log(splitArrayLeft[0][splitArrayLeft[0].length - 1]);
+        // console.log(splitArrayLeft[0]);
+        // console.log(splitArrayLeft);
+        $('#' + id + '5 img').addClass("offsetLeft")
+        $("#" + id + "5").off("click");
+      });
+    }
+
+    else if (id == "acePile" && ($("#" + id + "6 img").length == 0) && splitCard[0] == 1) {
+
+      $("#" + id + "6").click(function () {
+
+        $('#' + id + '6').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '6 img').removeClass("cardPile")
+        // $('#solitairePile1 img').css("z-index", "1")
+        // splitArrayLeft[0].push(splitCard)
+        aceArray[5].push(splitCard);
+
+        // console.log(aceArray);
+        // console.log(splitArrayLeft[0][splitArrayLeft[0].length - 1]);
+        // console.log(splitArrayLeft[0]);
+        // console.log(splitArrayLeft);
+        $('#' + id + '6 img').addClass("offsetLeft")
+        $("#" + id + "6").off("click");
+      });
+    }
+
+    else if (id == "acePile" && ($("#" + id + "7 img").length == 0) && splitCard[0] == 1) {
+
+      $("#" + id + "7").click(function () {
+
+        $('#' + id + '7').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '7 img').removeClass("cardPile")
+        // $('#solitairePile1 img').css("z-index", "1")
+        // splitArrayLeft[0].push(splitCard)
+        aceArray[6].push(splitCard);
+
+        // console.log(aceArray);
+        // console.log(splitArrayLeft[0][splitArrayLeft[0].length - 1]);
+        // console.log(splitArrayLeft[0]);
+        // console.log(splitArrayLeft);
+        $('#' + id + '7 img').addClass("offsetLeft")
+        $("#" + id + "7").off("click");
+      });
+    }
+
+
+    else if (id == "acePile" && ($("#" + id + "8 img").length == 0) && splitCard[0] == 1) {
+
+      $("#" + id + "8").click(function () {
+
+        $('#' + id + '8').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+        $('#' + id + '8 img').removeClass("cardPile")
+        // $('#solitairePile1 img').css("z-index", "1")
+        // splitArrayLeft[0].push(splitCard)
+        aceArray[7].push(splitCard);
+
+        // console.log(aceArray);
+        // console.log(splitArrayLeft[0][splitArrayLeft[0].length - 1]);
+        // console.log(splitArrayLeft[0]);
+        // console.log(splitArrayLeft);
+        $('#' + id + '8 img').addClass("offsetLeft")
+        $("#" + id + "8").off("click");
+      })
+    }
+    console.log(aceArray);
+    return aceArray
   }
 
-    $("#player2FaceUp").off("click")
-  })
 
-  $("#player2FaceUp").click(function () {
 
-    if (pTwoNewDeck[1][0] - pTwoNewCard[0] == 1 && ((pTwoNewDeck[1][2] == "Clubs" || pTwoNewDeck[1][2] == "Spades") && (pTwoNewCard[2] == "Diamonds" || pTwoNewCard[2] == "Hearts") || (pTwoNewDeck[1][2] == "Hearts" || pTwoNewDeck[1][2] == "Diamonds") && (pTwoNewCard[2] == "Clubs" || pTwoNewCard[2] == "Spades"))) {
 
-    $("#solitairePile4").click(function () {
 
-      $('#solitairePile4').append( $('#player2FaceUp>img:last-child') );
-      $('#solitairePile4 img').removeClass("cardPile")
-      // $('#solitairePile1 img').css("z-index", "1")
-      pTwoNewDeck[1] = pTwoNewCard;
-      console.log(pTwoNewDeck[1]);
-      $('#solitairePile4 img').addClass("noOffset")
-    })
-  }
 
-    $("#player2FaceUp").off("click")
-  })
 
-  $("#player2FaceUp").click(function () {
 
-    if (pTwoNewDeck[2][0] - pTwoNewCard[0] == 1 && ((pTwoNewDeck[2][2] == "Clubs" || pTwoNewDeck[2][2] == "Spades") && (pTwoNewCard[2] == "Diamonds" || pTwoNewCard[2] == "Hearts") || (pTwoNewDeck[2][2] == "Hearts" || pTwoNewDeck[2][2] == "Diamonds") && (pTwoNewCard[2] == "Clubs" || pTwoNewCard[2] == "Spades"))) {
 
-    $("#solitairePile6").click(function () {
 
-      $('#solitairePile6').append( $('#player2FaceUp>img:last-child') );
-      $('#solitairePile6 img').removeClass("cardPile")
-      // $('#solitairePile1 img').css("z-index", "1")
-      pTwoNewDeck[2] = pTwoNewCard;
-      console.log(pTwoNewDeck[2]);
-      $('#solitairePile6 img').addClass("noOffset")
-    })
-  }
 
-    $("#player2FaceUp").off("click")
-  })
 
-  $("#player2FaceUp").click(function () {
 
-    if (pTwoNewDeck[3][0] - pTwoNewCard[0] == 1 && ((pTwoNewDeck[3][2] == "Clubs" || pTwoNewDeck[3][2] == "Spades") && (pTwoNewCard[2] == "Diamonds" || pTwoNewCard[2] == "Hearts") || (pTwoNewDeck[3][2] == "Hearts" || pTwoNewDeck[3][2] == "Diamonds") && (pTwoNewCard[2] == "Clubs" || pTwoNewCard[2] == "Spades"))) {
 
-    $("#solitairePile8").click(function () {
 
-      $('#solitairePile8').append( $('#player2FaceUp>img:last-child') );
-      $('#solitairePile8 img').removeClass("cardPile")
-      // $('#solitairePile1 img').css("z-index", "1")
-      pTwoNewDeck[3] = pTwoNewCard;
-      console.log(pTwoNewDeck[3]);
-      $('#solitairePile8 img').addClass("noOffset")
-    })
-  }
 
-    $("#player2FaceUp").off("click")
-  })
+
+
+
+
+
+
+
+
+
+
+
+
+    // else if (id == "acePile" && ($("#" + id + "1 img").length == 0) && splitCard[0] == 1) {
+    //   $("#" + id + "1").click(function () {
+    //
+    //     $('#' + id + '1').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+    //     $('#' + id + '1 img').removeClass("cardPile")
+    //     // $('#solitairePile1 img').css("z-index", "1")
+    //     // var topCard0 = splitArrayLeft[0]
+    //     // topCard = splitCard;
+    //     // console.log(topCard);
+    //     $('#' + id + '1 img').addClass("offsetLeft")
+    //
+    //   })
+    //
+    //
+    // }
+
+
+
+
+
+    // else if (id == "acePile" && ($("#" + id + "1 img").length > 1) && splitCard[0] == 1) {
+    //   $("#" + id + "1").click(function () {
+    //
+    //     $('#' + id + '1').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+    //     $('#' + id + '1 img').removeClass("cardPile")
+    //     // $('#solitairePile1 img').css("z-index", "1")
+    //     var topCard0 = splitArrayLeft[0]
+    //     topCard = splitCard;
+    //     console.log(topCard);
+    //     $('#' + id + '1 img').addClass("offsetLeft")
+    //
+    //   })
+    //
+    //
+    // }
+
+
+
+//   $("#player" + playerTurn + pileType).click(function () {
+//
+    // if (splitArrayLeft[1][0][0] - splitCard[0] == 1 && ((splitArrayLeft[1][0][2] == "Clubs" || splitArrayLeft[1][0][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayLeft[1][0][2] == "Hearts" || splitArrayLeft[1][0][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades"))) {
+    //
+    //   $("#" + id + "3").click(function () {
+    //
+    //     $('#' + id + '3').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+    //     $('#' + id + '3 img').removeClass("cardPile")
+    //     // $('#solitairePile1 img').css("z-index", "1")
+    //     splitArrayLeft[1].push(splitCard)
+    //     console.log(splitArrayLeft[1]);
+    //     $('#' + id + '3 img').addClass("offsetLeft")
+    //
+    //   })
+    // }
+//
+//     else if (id == "acePile" && ($("#" + id + "3 img").length == 0) && splitCard[0] == 1) {
+//       $("#" + id + "1").click(function () {
+//
+//         $('#' + id + '3').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+//         $('#' + id + '3 img').removeClass("cardPile")
+//         // $('#solitairePile1 img').css("z-index", "1")
+//         // var topCard1 = splitArrayLeft[1]
+//         // topCard = splitCard;
+//         // console.log(topCard);
+//         $('#' + id + '3 img').addClass("offsetLeft")
+//
+//       })
+//     }
+//
+//     $("#player" + playerTurn + pileType).off("click")
+//
+//   })
+//
+  // $("#player" + playerTurn + pileType).click(function () {
+
+    // if (splitArrayLeft[2][0][0] - splitCard[0] == 1 && ((splitArrayLeft[2][0][2] == "Clubs" || splitArrayLeft[2][0][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayLeft[2][0][2] == "Hearts" || splitArrayLeft[2][0][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades"))) {
+    //
+    //   $("#" + id + "5").click(function () {
+    //
+    //     $('#' + id + '5').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+    //     $('#' + id + '5 img').removeClass("cardPile")
+    //     // $('#solitairePile1 img').css("z-index", "1")
+    //     splitArrayLeft[2].push(splitCard)
+    //     console.log(splitArrayLeft[2]);
+    //     $('#' + id + '5 img').addClass("offsetLeft")
+    //
+    //   })
+    // }
+//
+//     else if (id == "acePile" && ($("#" + id + "5 img").length == 0) && splitCard[0] == 1) {
+//       $("#" + id + "5").click(function () {
+//
+//         $('#' + id + '5').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+//         $('#' + id + '5 img').removeClass("cardPile")
+//         // $('#solitairePile1 img').css("z-index", "1")
+//         // var topCard1 = splitArrayLeft[2]
+//         // topCard = splitCard;
+//         // console.log(topCard);
+//         $('#' + id + '5 img').addClass("offsetLeft")
+//
+//       })
+//     }
+//
+//     $("#player" + playerTurn + pileType).off("click")
+//
+//   })
+//
+//   $("#player" + playerTurn + pileType).click(function () {
+//
+    // if (splitArrayLeft[3][0][0] - splitCard[0] == 1 && ((splitArrayLeft[3][0][2] == "Clubs" || splitArrayLeft[3][0][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayLeft[3][0][2] == "Hearts" || splitArrayLeft[3][0][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades"))) {
+    //
+    //   $("#" + id + "7").click(function () {
+    //
+    //     $('#' + id + '7').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+    //     $('#' + id + '7 img').removeClass("cardPile")
+    //     // $('#solitairePile1 img').css("z-index", "1")
+    //     splitArrayLeft[3].push(splitCard)
+    //     console.log(splitArrayLeft[3]);
+    //     $('#' + id + '7 img').addClass("offsetLeft")
+    //   })
+    // }
+//
+//     else if (id == "acePile" && ($("#" + id + "7 img").length == 0) && splitCard[0] == 1) {
+//       $("#" + id + "7").click(function () {
+//
+//         $('#' + id + '7').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+//         $('#' + id + '7 img').removeClass("cardPile")
+//         // $('#solitairePile1 img').css("z-index", "1")
+//         // var topCard1 = splitArrayLeft[3]
+//         // topCard = splitCard;
+//         // console.log(topCard);
+//         $('#' + id + '7 img').addClass("offsetLeft")
+//
+//       })
+//     }
+//
+//     $("#player" + playerTurn + pileType).off("click")
+//
+//   })
+//
+//
+//   // PLAYER 1 RIGHT HAND SIDE
+//
+//   $("#player" + playerTurn + pileType).click(function () {
+//
+//     if (splitArrayRight[0][0][0] - splitCard[0] == 1 && ((splitArrayRight[0][0][2] == "Clubs" || splitArrayRight[0][0][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayRight[0][0][2] == "Hearts" || splitArrayRight[0][0][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades"))) {
+//
+//     $("#" + id + "2").click(function () {
+//       console.log();
+//       $('#' + id + '2').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+//       $('#' + id + '2 img').removeClass("cardPile")
+//       // $('#solitairePile1 img').css("z-index", "1")
+//       splitArrayRight[0].push(splitCard)
+//       console.log(splitArrayRight[0]);
+//       $('#' + id + '2 img').addClass("noOffset")
+//     })
+//   }
+//
+//   else if (id == "acePile" && ($("#" + id + "2 img").length == 0) && splitCard[0] == 1) {
+//     $("#" + id + "2").click(function () {
+//
+//       $('#' + id + '2').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+//       $('#' + id + '2 img').removeClass("cardPile")
+//       // $('#solitairePile1 img').css("z-index", "1")
+//       // var topCard1 = splitArrayLeft[0]
+//       // topCard = splitCard;
+//       // console.log(topCard);
+//       $('#' + id + '2 img').addClass("offsetLeft")
+//
+//     })
+//   }
+//
+//     $("#player" + playerTurn + pileType).off("click")
+//   })
+//
+//   $("#player" + playerTurn + pileType).click(function () {
+//
+//     if (splitArrayRight[1][0][0] - splitCard[0] == 1 && ((splitArrayRight[1][0][2] == "Clubs" || splitArrayRight[1][0][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayRight[1][0][2] == "Hearts" || splitArrayRight[1][0][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades"))) {
+//
+//     $("#" + id + "4").click(function () {
+//
+//       $('#' + id + '4').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+//       $('#' + id + '4 img').removeClass("cardPile")
+//       // $('#solitairePile1 img').css("z-index", "1")
+//       splitArrayRight[1].push(splitCard)
+//       console.log(splitArrayRight[1]);
+//       $('#' + id + '4 img').addClass("noOffset")
+//     })
+//   }
+//
+//   else if (id == "acePile" && ($("#" + id + "4 img").length == 0) && splitCard[0] == 1) {
+//     $("#" + id + "4").click(function () {
+//
+//       $('#' + id + '4').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+//       $('#' + id + '4 img').removeClass("cardPile")
+//       // $('#solitairePile1 img').css("z-index", "1")
+//       // var topCard1 = splitArrayLeft[1]
+//       // topCard = splitCard;
+//       // console.log(topCard);
+//       $('#' + id + '4 img').addClass("offsetLeft")
+//
+//     })
+//   }
+//
+//     $("#player" + playerTurn + pileType).off("click")
+//   })
+//
+//   $("#player" + playerTurn + pileType).click(function () {
+//
+//     if (splitArrayRight[2][0][0] - splitCard[0] == 1 && ((splitArrayRight[2][0][2] == "Clubs" || splitArrayRight[2][0][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayRight[2][0][2] == "Hearts" || splitArrayRight[2][0][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades"))) {
+//
+//     $("#" + id + "6").click(function () {
+//
+//       $('#' + id + '6').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+//       $('#' + id + '6 img').removeClass("cardPile")
+//       splitArrayRight[2].push(splitCard)
+//       console.log(splitArrayRight[2]);
+//       // $('#solitairePile1 img').css("z-index", "1")
+//       $('#' + id + '6 img').addClass("noOffset")
+//     })
+//   }
+//
+//   else if (id == "acePile" && ($("#" + id + "6 img").length == 0) && splitCard[0] == 1) {
+//     $("#" + id + "6").click(function () {
+//
+//       $('#' + id + '6').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+//       $('#' + id + '6 img').removeClass("cardPile")
+//       // $('#solitairePile1 img').css("z-index", "1")
+//       // var topCard1 = splitArrayLeft[2]
+//       // topCard = splitCard;
+//       // console.log(topCard);
+//       $('#' + id + '6 img').addClass("offsetLeft")
+//
+//     })
+//   }
+//
+//     $("#player" + playerTurn + pileType).off("click")
+//   })
+//
+//   $("#player" + playerTurn + pileType).click(function () {
+//
+//     if (splitArrayRight[3][0][0] - splitCard[0] == 1 && ((splitArrayRight[3][0][2] == "Clubs" || splitArrayRight[3][0][2] == "Spades") && (splitCard[2] == "Diamonds" || splitCard[2] == "Hearts") || (splitArrayRight[3][0][2] == "Hearts" || splitArrayRight[3][0][2] == "Diamonds") && (splitCard[2] == "Clubs" || splitCard[2] == "Spades"))) {
+//
+//     $("#" + id + "8").click(function () {
+//
+//       $('#' + id + '8').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+//       $('#' + id + '8 img').removeClass("cardPile")
+//       // $('#solitairePile1 img').css("z-index", "1")
+//       splitArrayRight[3].push(splitCard)
+//       console.log(splitArrayRight[3]);
+//       $('#' + id + '8 img').addClass("noOffset")
+//     })
+//   }
+//
+//   else if (id == "acePile" && ($("#" + id + "8 img").length == 0) && splitCard[0] == 1) {
+//     $("#" + id + "8").click(function () {
+//
+//       $('#' + id + '8').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+//       $('#' + id + '8 img').removeClass("cardPile")
+//       // $('#solitairePile1 img').css("z-index", "1")
+//       // var topCard1 = splitArrayLeft[3]
+//       // topCard = splitCard;
+//       // console.log(topCard);
+//       $('#' + id + '8 img').addClass("offsetLeft")
+//
+//     })
+//   }
+//
+//     $("#player" + playerTurn + pileType).off("click")
+//   })
+//
+// }
+
+// console.log($(".acePile"));
+//
+//
+// $("#player1FaceUp").click(function () {
+//
+//   // if () {
+//   //   for (var i = 0; i < $(".acePile").length; i++) { $($(".acePile")[i]).click(function () {
+//   //     // $(".acePile")[i]).append( $('#player1FaceUp>img:last-child') );
+//   //     // $('.ace img').removeClass("cardPile")
+//   //     // // $('#solitairePile1 img').css("z-index", "1")
+//   //     // splitArrayRight[1] = splitCard;
+//   //     // console.log(splitArrayRight[1]);
+//   //     // $('#solitairePile4 img').addClass("noOffset")
+//   // } )}
+//
+//
+//
+//
+//
+//     // $('#solitairePile4').append( $('#player' + playerTurn + pileType + '>img:last-child') );
+//     // $('#solitairePile4 img').removeClass("cardPile")
+//     // // $('#solitairePile1 img').css("z-index", "1")
+//     // splitArrayRight[1] = splitCard;
+//     // console.log(splitArrayRight[1]);
+//     // $('#solitairePile4 img').addClass("noOffset")
+//   })
+// }
+
+  // $("#player" + playerTurn + pileType).off("click")
+// })
+
 $("#endTurn").click(function () {
   console.log("End Turn");
-  turn == "X" ? turn = "Y" : turn = "X"
+  turn == "X" ? turn = "Y" : turn = "X";
 
 })
 
-console.log(pOneNewDeck[0][0] - pOneNewCard[0]);
 
-if (pOneNewDeck[0][0] - pOneNewCard[0] == 1) {
-  console.log(pOneNewCard);
 
-}
 
-$("#player1FaceUp").click(function () {
 
-  if (pOneNewDeck[0][0] - pOneFlipCard[0] == 1 && ((pOneNewDeck[0][2] == "Clubs" || pOneNewDeck[0][2] == "Spades") && (pOneFlipCard[2] == "Diamonds" || pOneFlipCard[2] == "Hearts") || (pOneNewDeck[0][2] == "Hearts" || pOneNewDeck[0][2] == "Diamonds") && (pOneFlipCard[2] == "Clubs" || pOneFlipCard[2] == "Spades"))) {
 
-    $("#solitairePile1").click(function () {
-
-      $('#solitairePile1').append( $('#player1FaceUp>img:last-child') );
-      $('#solitairePile1 img').removeClass("cardPile")
-      // $('#solitairePile1 img').css("z-index", "1")
-      $('#solitairePile1 img').addClass("offsetLeft")
-    })
-  }
-
-  $("#player1FaceUp").off("click")
-
-})
 
 })
 });
