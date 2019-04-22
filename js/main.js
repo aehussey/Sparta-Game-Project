@@ -158,6 +158,7 @@ $(function () {
         var pOneNewCard = splitCard(pOneDraw)
         unusedDeck.push(pOneDraw)
 
+
         return pOneNewCard
 
       }
@@ -168,9 +169,6 @@ $(function () {
       }
 
       aceArray = [[],[],[],[],[],[],[],[]]
-
-
-
 
 
 

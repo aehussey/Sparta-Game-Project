@@ -8,6 +8,8 @@ This is a single page, web hosted game that ties together HTML, CSS and Javascri
 
 ## How to Access The Game
 
+Open a browser and copy https://aehussey.github.io/Sparta-Game-Project/ into the search bar.
+
 ## How To Play
 
 Cravate is a 2 player game of solitaire, based on luck and skill. It is a slow game, that requires patience.
