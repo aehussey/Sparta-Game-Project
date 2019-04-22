@@ -1,5 +1,5 @@
 body {
-  background-color: green;
+  background-image: url("../images/table-top.jpg");
 }
 
 img {
@@ -16,7 +16,8 @@ div.card1, div.card2 {display: inline-block;}
 
 
 .container {
-  background-color: white;
+  background-image: url("../images/table-top.jpg");
+
   height: 910px;
   width: 1000px;
   margin: auto;
@@ -31,7 +32,7 @@ div.card1, div.card2 {display: inline-block;}
 
  div .offsetLeft{
    position: absolute;
-   right:25px;
+   right:18px;
 }
 
 div .noOffset{
@@ -40,39 +41,21 @@ div .noOffset{
 }
 
 .firstCardLeft {
- /* z-index: 0; */
+
  position: absolute;
  right:17px;
 }
 
-.acePileLeft {
-  /* margin-left: 50px;
-  margin-right: 10px; */
-  /* background-image: url("../images/card-images/2C.png"); */
-  /* background-size: cover; */
-}
 
-.acePileRight {
-  /* margin-right: 50px;
-  margin-left: 10px; */
-  /* background-image: url("../images/card-images/2C.png"); */
-  /* background-size: cover; */
-}
-
-.solitairePile {
-
-  /* background-image: url("../images/card-images/2C.png");
-  background-size: cover; */
-}
 .card1 {
-  border: red 2px solid;
+  border: white 2px solid;
   height: 110px;
 
 
 }
 
 .card2 {
-  border: blue 2px solid;
+  border: white 2px solid;
   height: 110px;
 
 
@@ -81,6 +64,8 @@ div .noOffset{
 .cardPile {
   position: absolute;
 }
+
+.pointer {cursor: pointer;}
 
 /* .droparea:-moz-drag-over {
   border: 1px solid black;

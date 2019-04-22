@@ -5,32 +5,108 @@
     <title></title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
+
     <script
     src="https://code.jquery.com/jquery-3.4.0.min.js"
     integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
     crossorigin="anonymous">
     </script>
+    <script type="text/javascript" src="js/bootstrap.min.js">
+
+    </script>
     <script type="text/javascript" src="js/main.js">
     </script>
   </head>
   <body>
+
+    <div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Cravate - How to Play</h4>
+            </div>
+            <div class="modal-body">
+                <p>Cravate is a 2 player game of solitaire, based on luck and skill. It is a slow game, that requires patience.</p>
+                <p>The aim of the game is for each player to get rid of all of their cards. The 1st player to do so wins.</p>
+                <p>A player can get rid of their cards in two ways. The player turns over cards from their deck and can play the card on either the outside or central piles</p>
+                <p>A card can be played on the outer pile if said card is lower by one and a different colour to the top card on the outer pile.</p>
+                <p>The first card played on the central pile must me an ace. The 1st central pile to have an ace in it must be the top left. The nest is the top right and then the order follows this down into the 2nd, 3rd and 4th rows.</p>
+                <p>Once a card has been placed <em>IT CANNOT BE MOVED</em>. </p>
+                <p>If you try to turn a card over and nothing happens, it is time to click 'End Turn' - Your Turn is over</p>
+                <p>Click the 'Start Game' button to start and refresh the page to restart!</p>
+                <p>Good luck and have fun!</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="winP1Modal" class="modal fade">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Player 1 is the winner!!!!</h4>
+        </div>
+        <div class="modal-body">
+            <p>Congrats my friend, you killed it!</p>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div id="winP2Modal" class="modal fade">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Player 2 is the winner!!!!</h4>
+        </div>
+        <div class="modal-body">
+            <p>Congrats my friend, you killed it!</p>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+        </div>
+    </div>
+</div>
+</div>
+
+    <!-- <button type="button" id="startGame" class="btn btn-primary">How To Play</button> -->
+
+
+    <!-- <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span> boo </button> -->
+
     <button type="button" id="startGame" class="btn btn-primary">Start Game</button>
 
     <button type="button" id="endTurn" class="btn btn-primary">End Turn</button>
-    <button type="button" id="callCravate" class="btn btn-primary">Cravate!</button>
+
     <div class="container">
 
       <div class="row">
-        <div id="player1Talon" class = "card2 col-xs-6">
-          <img src="images/card-images/blue_back.png" alt="" >
+        <div class = "card2 col-xs-6">
+
 
         </div>
 
-        <div id="player1FaceDown" class = "card1 col-xs-3">
+        <div id="player1FaceDown" class = "card1 pointer col-xs-3">
           <img src="images/card-images/blue_back.png" alt="" >
 
         </div>
-        <div id="player1FaceUp" class="card2 faceUpPile col-xs-3">
+        <div id="player1FaceUp" class="card2 faceUpPile  pointer col-xs-3">
 
 
         </div>
@@ -41,73 +117,73 @@
 
 
       <div class="row playPile">
-        <div id="solitairePile1" class="col-xs-4 solitairePile offsetPile solitairePileLeft" >
+        <div id="solitairePile1" class="col-xs-4 solitairePile offsetPile solitairePileLeft pointer" >
 
         </div>
-        <div id="acePile1" class="col-xs-2 acePileLeft acePile card2">
+        <div id="acePile1" class="col-xs-2 acePileLeft acePile card2 pointer">
 
         </div>
-        <div id="acePile2" class="col-xs-2 acePileRight acePile card1">
+        <div id="acePile2" class="col-xs-2 acePileRight acePile card1 pointer">
 
         </div>
-        <div id="solitairePile2" class="col-xs-4 solitairePile solitairePileRight">
+        <div id="solitairePile2" class="col-xs-4 solitairePile solitairePileRight pointer">
 
         </div>
       </div>
 
       <div class="row playPile">
-        <div id="solitairePile3" class="col-xs-4 solitairePile solitairePileLeft ">
+        <div id="solitairePile3" class="col-xs-4 solitairePile solitairePileLeft pointer ">
 
         </div>
-        <div id="acePile3" class="col-xs-2  acePileLeft acePile card2">
+        <div id="acePile3" class="col-xs-2  acePileLeft acePile card2 pointer">
 
         </div>
-        <div id="acePile4" class="col-xs-2 acePileRight acePile card1">
+        <div id="acePile4" class="col-xs-2 acePileRight acePile card1 pointer">
 
         </div>
-        <div id="solitairePile4" class="col-xs-4 solitairePile solitairePileRight">
-
-        </div>
-      </div>
-      <div class="row playPile">
-        <div id="solitairePile5" class="col-xs-4 solitairePile solitairePileLeft">
-
-        </div>
-        <div id="acePile5" class="col-xs-2 acePileLeft acePile card2">
-
-        </div>
-        <div id="acePile6" class="col-xs-2 acePileRight acePile card1">
-
-        </div>
-        <div id="solitairePile6" class="col-xs-4 solitairePile solitairePileRight">
+        <div id="solitairePile4" class="col-xs-4 solitairePile solitairePileRight pointer">
 
         </div>
       </div>
       <div class="row playPile">
-        <div id="solitairePile7" class="col-xs-4 solitairePile solitairePileLeft">
+        <div id="solitairePile5" class="col-xs-4 solitairePile solitairePileLeft pointer">
 
         </div>
-        <div id="acePile7" class="col-xs-2 acePileLeft acePile card2">
+        <div id="acePile5" class="col-xs-2 acePileLeft acePile card2 pointer">
 
         </div>
-        <div id="acePile8" class="col-xs-2 acePileRight acePile card1">
+        <div id="acePile6" class="col-xs-2 acePileRight acePile card1 pointer">
 
         </div>
-        <div id="solitairePile8" class="col-xs-4 solitairePile solitairePileRight">
+        <div id="solitairePile6" class="col-xs-4 solitairePile solitairePileRight pointer">
+
+        </div>
+      </div>
+      <div class="row playPile">
+        <div id="solitairePile7" class="col-xs-4 solitairePile solitairePileLeft pointer">
+
+        </div>
+        <div id="acePile7" class="col-xs-2 acePileLeft acePile card2 pointer">
+
+        </div>
+        <div id="acePile8" class="col-xs-2 acePileRight acePile card1 pointer">
+
+        </div>
+        <div id="solitairePile8" class="col-xs-4 solitairePile solitairePileRight pointer">
 
         </div>
       </div>
 
       <div class="row bottom">
-        <div id="player2Talon" class = "card1 col-xs-6">
-          <img src="images/card-images/grey_back.png" alt="" >
+        <div id="player2Talon" class = "card1 col-xs-6 pointer">
+
         </div>
-        <div id="player2FaceDown" class="card2 col-xs-3" >
+        <div id="player2FaceDown" class="card2 col-xs-3 pointer" >
           <img src="images/card-images/grey_back.png" alt="" >
 
         </div>
 
-        <div id="player2FaceUp" class="card1  col-xs-3">
+        <div id="player2FaceUp" class="card1  col-xs-3 pointer">
 
 
         </div>
