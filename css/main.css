@@ -1,0 +1,68 @@
+body {
+  background-image: url("../images/table-top.jpg");
+}
+
+img {
+  height: 110px;
+  width: 72px;
+
+}
+
+div.card1, div.card2 {display: inline-block;}
+
+/* CLASSES */
+
+.bottom {margin-bottom: 100px;}
+
+
+.container {
+  background-image: url("../images/table-top.jpg");
+
+  height: 910px;
+  width: 1000px;
+  margin: auto;
+  margin-top: 100px;
+}
+
+.playPile {
+  margin: 50px;
+}
+
+
+
+ div .offsetLeft{
+   position: absolute;
+   right:18px;
+}
+
+div .noOffset{
+  position: absolute;
+
+}
+
+.firstCardLeft {
+
+ position: absolute;
+ right:17px;
+}
+
+
+.card1 {
+  border: white 2px solid;
+  height: 110px;
+
+
+}
+
+.card2 {
+  border: white 2px solid;
+  height: 110px;
+
+
+}
+
+.cardPile {
+  position: absolute;
+}
+
+.pointer {cursor: pointer;}
