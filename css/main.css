@@ -5,7 +5,7 @@ body {
 img {
   height: 110px;
   width: 72px;
-  /* margin-bottom: 20px; */
+
 }
 
 div.card1, div.card2 {display: inline-block;}
@@ -66,7 +66,3 @@ div .noOffset{
 }
 
 .pointer {cursor: pointer;}
-
-/* .droparea:-moz-drag-over {
-  border: 1px solid black;
-} */

@@ -197,6 +197,7 @@ $(function () {
       else if (turn == "X" && deck1.deck.length == 0) {
         for (var i = 0; i < unusedDeckP1.length; i++) {
           deck1.deck.push(unusedDeckP1[i])
+          turn = "Y"
         }
         unusedDeckP1 = []
 
@@ -235,6 +236,7 @@ $(function () {
 
         for (var i = 0; i < unusedDeckP2.length; i++) {
           deck1.deck.push(unusedDeckP2[i])
+          turn = "X"
 
         }
         unusedDeckP2 = []
