@@ -38,11 +38,11 @@ $(function () {
 
 
   function splitDeck (deck) {
-    var deckArray = []
+    var deckArray = [];
     for (var i = 0; i < deck.length; i++) {
     var cards = deck[i].split("-");
-    var starterCard = []
-    var starterArray = starterCard.push(cards)
+    var starterCard = [];
+    var starterArray = starterCard.push(cards);
 
     deckArray.push(starterCard);
     }
@@ -55,7 +55,7 @@ $(function () {
     var card = cardName.split("-");
 
 
-    return card
+    return card;
   }
 
 
@@ -95,9 +95,9 @@ $(function () {
     createStartMove () {
       var startMoveArray = [];
       for (var i = 0; i < 4; i++) {
-        startMoveArray.push(this.deck.pop())
+        startMoveArray.push(this.deck.pop());
       }
-      var newDeck = splitDeck (startMoveArray)
+      var newDeck = splitDeck (startMoveArray);
 
     return startMoveArray;
 
@@ -105,7 +105,7 @@ $(function () {
 
     drawCard () {
       var card = this.deck.pop();
-      return card
+      return card;
     }
   }
 
@@ -123,52 +123,52 @@ $(function () {
       deck2 = new Deck();
       deck2.shuffle();
 
-      var pOneStart = deck1.createStartMove()
+      var pOneStart = deck1.createStartMove();
 
 
-      splitArrayLeft = splitDeck(pOneStart)
-
-
-
-      drawStarterCardsLeft(pOneStart)
+      splitArrayLeft = splitDeck(pOneStart);
 
 
 
-      var pTwoStart = deck2.createStartMove()
-
-      splitArrayRight = splitDeck(pTwoStart)
+      drawStarterCardsLeft(pOneStart);
 
 
 
-      drawStarterCardsRight(pTwoStart)
+      var pTwoStart = deck2.createStartMove();
+
+      splitArrayRight = splitDeck(pTwoStart);
+
+
+
+      drawStarterCardsRight(pTwoStart);
 
 
 
 
       $("#startGame").hide();
 
-      turn = "X"
+      turn = "X";
 
-      var unusedDeckP1 = []
-      var unusedDeckP2 = []
+      var unusedDeckP1 = [];
+      var unusedDeckP2 = [];
 
       function play(deck, player, unusedDeck) {
         var pOneDraw = deck.drawCard();
-        player(pOneDraw)
-        var pOneNewCard = splitCard(pOneDraw)
-        unusedDeck.push(pOneDraw)
+        player(pOneDraw);
+        var pOneNewCard = splitCard(pOneDraw);
+        unusedDeck.push(pOneDraw);
 
 
-        return pOneNewCard
+        return pOneNewCard;
 
       }
 
       function removePlayedCard(unusedDeck) {
-        unusedDeck.pop()
+        unusedDeck.pop();
 
       }
 
-      aceArray = [[],[],[],[],[],[],[],[]]
+      aceArray = [[],[],[],[],[],[],[],[]];
 
 
 
@@ -177,14 +177,14 @@ $(function () {
     $("#player1FaceDown").click(function () {
       if (turn == "X" && deck1.deck.length > 0) {
 
-        var drawnCardSplit = play(deck1, drawCardPlayer1, unusedDeckP1)
+        var drawnCardSplit = play(deck1, drawCardPlayer1, unusedDeckP1);
 
         $("#player1FaceUp").click(function () {
 
           playerTurnLeftArray(1, "solitairePile", "FaceUp", splitArrayLeft, drawnCardSplit, unusedDeckP1);
           playerTurnRightArray(1, "solitairePile", "FaceUp", splitArrayRight, drawnCardSplit, unusedDeckP1);
-          playerTurnAcePile(1, "acePile", "FaceUp", aceArray, drawnCardSplit, unusedDeckP1)
-          playerBuildAcePile(1, "acePile", "FaceUp", aceArray, drawnCardSplit, unusedDeckP1)
+          playerTurnAcePile(1, "acePile", "FaceUp", aceArray, drawnCardSplit, unusedDeckP1);
+          playerBuildAcePile(1, "acePile", "FaceUp", aceArray, drawnCardSplit, unusedDeckP1);
 
 
 
@@ -196,10 +196,10 @@ $(function () {
 
       else if (turn == "X" && deck1.deck.length == 0) {
         for (var i = 0; i < unusedDeckP1.length; i++) {
-          deck1.deck.push(unusedDeckP1[i])
-          turn = "Y"
+          deck1.deck.push(unusedDeckP1[i]);
+          turn = "Y";
         }
-        unusedDeckP1 = []
+        unusedDeckP1 = [];
 
       }
 
@@ -215,18 +215,18 @@ $(function () {
 
 
 
-        var drawnCardSplit = play(deck2, drawCardPlayer2, unusedDeckP2)
+        var drawnCardSplit = play(deck2, drawCardPlayer2, unusedDeckP2);
 
         $("#player2FaceUp").click(function () {
 
           playerTurnLeftArray(2, "solitairePile", "FaceUp", splitArrayLeft, drawnCardSplit, unusedDeckP2);
           playerTurnRightArray(2, "solitairePile", "FaceUp", splitArrayRight, drawnCardSplit, unusedDeckP2);
-          playerTurnAcePile(2, "acePile", "FaceUp", aceArray, drawnCardSplit, unusedDeckP2)
-          playerBuildAcePile(2, "acePile", "FaceUp", aceArray, drawnCardSplit, unusedDeckP2)
+          playerTurnAcePile(2, "acePile", "FaceUp", aceArray, drawnCardSplit, unusedDeckP2);
+          playerBuildAcePile(2, "acePile", "FaceUp", aceArray, drawnCardSplit, unusedDeckP2);
 
 
 
-          $("#player2FaceUp").off("click")
+          $("#player2FaceUp").off("click");
 
         })
 
@@ -235,18 +235,18 @@ $(function () {
       else if (turn == "Y" && deck2.deck.length == 0) {
 
         for (var i = 0; i < unusedDeckP2.length; i++) {
-          deck1.deck.push(unusedDeckP2[i])
-          turn = "X"
+          deck1.deck.push(unusedDeckP2[i]);
+          turn = "X";
 
         }
-        unusedDeckP2 = []
+        unusedDeckP2 = [];
 
       }
 
       else if (turn == "Y" && deck1.deck.length == 0 && unusedDeckP2.length == 0) {
         $(document).ready(function(){
         		$("#winP2Modal").modal('show');
-        	});
+        	})
       }
 
   })
@@ -265,14 +265,14 @@ $(function () {
           $("#" + id + "1").click(function () {
 
             $('#' + id + '1').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '1 img').removeClass("cardPile")
+            $('#' + id + '1 img').removeClass("cardPile");
 
-            splitArrayLeft[0].push(splitCard)
+            splitArrayLeft[0].push(splitCard);
 
 
-            $('#' + id + '1 img').addClass("offsetLeft")
+            $('#' + id + '1 img').addClass("offsetLeft");
             $("#" + id + "1").off("click");
-            removePlayedCard(unusedDeck)
+            removePlayedCard(unusedDeck);
           });
         }
 
@@ -282,14 +282,14 @@ $(function () {
           $("#" + id + "3").click(function () {
 
             $('#' + id + '3').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '3 img').removeClass("cardPile")
+            $('#' + id + '3 img').removeClass("cardPile");
 
-            splitArrayLeft[1].push(splitCard)
+            splitArrayLeft[1].push(splitCard);
 
 
-            $('#' + id + '3 img').addClass("offsetLeft")
+            $('#' + id + '3 img').addClass("offsetLeft");
             $("#" + id + "3").off("click");
-            removePlayedCard(unusedDeck)
+            removePlayedCard(unusedDeck);
           })
         }
 
@@ -298,13 +298,13 @@ $(function () {
           $("#" + id + "5").click(function () {
 
             $('#' + id + '5').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '5 img').removeClass("cardPile")
+            $('#' + id + '5 img').removeClass("cardPile");
 
             splitArrayLeft[2].push(splitCard);
 
-            $('#' + id + '5 img').addClass("offsetLeft")
+            $('#' + id + '5 img').addClass("offsetLeft");
             $("#" + id + "5").off("click");
-            removePlayedCard(unusedDeck)
+            removePlayedCard(unusedDeck);
 
           })
         }
@@ -314,17 +314,17 @@ $(function () {
           $("#" + id + "7").click(function () {
 
             $('#' + id + '7').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '7 img').removeClass("cardPile")
+            $('#' + id + '7 img').removeClass("cardPile");
 
-            splitArrayLeft[3].push(splitCard)
+            splitArrayLeft[3].push(splitCard);
 
-            $('#' + id + '7 img').addClass("offsetLeft")
+            $('#' + id + '7 img').addClass("offsetLeft");
             $("#" + id + "7").off("click");
-            removePlayedCard(unusedDeck)
+            removePlayedCard(unusedDeck);
           })
         }
 
-        return splitArrayLeft
+        return splitArrayLeft;
       }
 
 
@@ -340,14 +340,14 @@ $(function () {
           $("#" + id + "2").click(function () {
 
             $('#' + id + '2').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '2 img').removeClass("cardPile")
+            $('#' + id + '2 img').removeClass("cardPile");
 
             splitArrayLeft[0].push(splitCard);
 
 
             $('#' + id + '2 img').addClass("noOffset");
             $("#" + id + "2").off("click");
-            removePlayedCard(unusedDeck)
+            removePlayedCard(unusedDeck);
           })
         }
 
@@ -356,14 +356,14 @@ $(function () {
           $("#" + id + "4").click(function () {
 
             $('#' + id + '4').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '4 img').removeClass("cardPile")
+            $('#' + id + '4 img').removeClass("cardPile");
 
-            splitArrayRight[1].push(splitCard)
+            splitArrayRight[1].push(splitCard);
 
 
-            $('#' + id + '4 img').addClass("noOffset")
+            $('#' + id + '4 img').addClass("noOffset");
             $("#" + id + "4").off("click");
-            removePlayedCard(unusedDeck)
+            removePlayedCard(unusedDeck);
           })
         }
 
@@ -372,15 +372,15 @@ $(function () {
           $("#" + id + "6").click(function () {
 
             $('#' + id + '6').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '6 img').removeClass("cardPile")
+            $('#' + id + '6 img').removeClass("cardPile");
 
-            splitArrayRight[2].push(splitCard)
+            splitArrayRight[2].push(splitCard);
 
 
 
-            $('#' + id + '6 img').addClass("noOffset")
+            $('#' + id + '6 img').addClass("noOffset");
             $("#" + id + "6").off("click");
-            removePlayedCard(unusedDeck)
+            removePlayedCard(unusedDeck);
 
           })
         }
@@ -390,18 +390,18 @@ $(function () {
           $("#" + id + "8").click(function () {
 
             $('#' + id + '8').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '8 img').removeClass("cardPile")
+            $('#' + id + '8 img').removeClass("cardPile");
 
-            splitArrayRight[3].push(splitCard)
+            splitArrayRight[3].push(splitCard);
 
 
 
-            $('#' + id + '8 img').addClass("noOffset")
+            $('#' + id + '8 img').addClass("noOffset");
             $("#" + id + "8").off("click");
-            removePlayedCard(unusedDeck)
+            removePlayedCard(unusedDeck);
           })
         }
-        return splitArrayRight
+        return splitArrayRight;
       }
 
                     // ACE PILES PLAY 1ST CARD
@@ -414,17 +414,17 @@ $(function () {
           $("#" + id + "1").click(function () {
 
             $('#' + id + '1').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '1 img').removeClass("cardPile")
+            $('#' + id + '1 img').removeClass("cardPile");
 
 
             aceArray[0].push(splitCard);
 
 
 
-            $('#' + id + '1 img').addClass("offsetLeft")
+            $('#' + id + '1 img').addClass("offsetLeft");
             $("#" + id + "1").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -436,17 +436,17 @@ $(function () {
           $("#" + id + "2").click(function () {
 
             $('#' + id + '2').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '2 img').removeClass("cardPile")
+            $('#' + id + '2 img').removeClass("cardPile");
 
             aceArray[1].push(splitCard);
 
 
 
 
-            $('#' + id + '2 img').addClass("offsetLeft")
+            $('#' + id + '2 img').addClass("offsetLeft");
             $("#" + id + "2").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -456,15 +456,15 @@ $(function () {
           $("#" + id + "3").click(function () {
 
             $('#' + id + '3').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '3 img').removeClass("cardPile")
+            $('#' + id + '3 img').removeClass("cardPile");
 
             aceArray[2].push(splitCard);
 
 
-            $('#' + id + '3 img').addClass("offsetLeft")
+            $('#' + id + '3 img').addClass("offsetLeft");
             $("#" + id + "3").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -475,15 +475,15 @@ $(function () {
           $("#" + id + "4").click(function () {
 
             $('#' + id + '4').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '4 img').removeClass("cardPile")
+            $('#' + id + '4 img').removeClass("cardPile");
 
             aceArray[3].push(splitCard);
 
 
-            $('#' + id + '4 img').addClass("offsetLeft")
+            $('#' + id + '4 img').addClass("offsetLeft");
             $("#" + id + "4").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -494,15 +494,15 @@ $(function () {
           $("#" + id + "5").click(function () {
 
             $('#' + id + '5').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '5 img').removeClass("cardPile")
+            $('#' + id + '5 img').removeClass("cardPile");
 
             aceArray[4].push(splitCard);
 
 
-            $('#' + id + '5 img').addClass("offsetLeft")
+            $('#' + id + '5 img').addClass("offsetLeft");
             $("#" + id + "5").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -512,15 +512,15 @@ $(function () {
           $("#" + id + "6").click(function () {
 
             $('#' + id + '6').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '6 img').removeClass("cardPile")
+            $('#' + id + '6 img').removeClass("cardPile");
 
             aceArray[5].push(splitCard);
 
 
-            $('#' + id + '6 img').addClass("offsetLeft")
+            $('#' + id + '6 img').addClass("offsetLeft");
             $("#" + id + "6").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
       }
@@ -530,15 +530,15 @@ $(function () {
           $("#" + id + "7").click(function () {
 
             $('#' + id + '7').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '7 img').removeClass("cardPile")
+            $('#' + id + '7 img').removeClass("cardPile");
 
             aceArray[6].push(splitCard);
 
 
-            $('#' + id + '7 img').addClass("offsetLeft")
+            $('#' + id + '7 img').addClass("offsetLeft");
             $("#" + id + "7").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -549,14 +549,14 @@ $(function () {
           $("#" + id + "8").click(function () {
 
             $('#' + id + '8').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '8 img').removeClass("cardPile")
+            $('#' + id + '8 img').removeClass("cardPile");
 
             aceArray[7].push(splitCard);
 
-            $('#' + id + '8 img').addClass("offsetLeft")
+            $('#' + id + '8 img').addClass("offsetLeft");
             $("#" + id + "8").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           })
       }
@@ -574,7 +574,7 @@ $(function () {
           $("#" + id + "1").click(function () {
 
             $('#' + id + '1').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '1 img').removeClass("cardPile")
+            $('#' + id + '1 img').removeClass("cardPile");
 
 
             aceArray[0].push(splitCard);
@@ -582,10 +582,10 @@ $(function () {
 
 
 
-            $('#' + id + '1 img').addClass("offsetLeft")
+            $('#' + id + '1 img').addClass("offsetLeft");
             $("#" + id + "1").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -596,7 +596,7 @@ $(function () {
           $("#" + id + "2").click(function () {
 
             $('#' + id + '2').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '2 img').removeClass("cardPile")
+            $('#' + id + '2 img').removeClass("cardPile");
 
 
             aceArray[1].push(splitCard);
@@ -604,10 +604,10 @@ $(function () {
 
 
 
-            $('#' + id + '2 img').addClass("offsetLeft")
+            $('#' + id + '2 img').addClass("offsetLeft");
             $("#" + id + "2").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -618,17 +618,17 @@ $(function () {
           $("#" + id + "3").click(function () {
 
             $('#' + id + '3').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '3 img').removeClass("cardPile")
+            $('#' + id + '3 img').removeClass("cardPile");
 
 
             aceArray[2].push(splitCard);
 
 
 
-            $('#' + id + '3 img').addClass("offsetLeft")
+            $('#' + id + '3 img').addClass("offsetLeft");
             $("#" + id + "3").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -639,7 +639,7 @@ $(function () {
           $("#" + id + "4").click(function () {
 
             $('#' + id + '4').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '4 img').removeClass("cardPile")
+            $('#' + id + '4 img').removeClass("cardPile");
 
 
             aceArray[3].push(splitCard);
@@ -647,10 +647,10 @@ $(function () {
 
 
 
-            $('#' + id + '4 img').addClass("offsetLeft")
+            $('#' + id + '4 img').addClass("offsetLeft");
             $("#" + id + "4").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -661,7 +661,7 @@ $(function () {
           $("#" + id + "5").click(function () {
 
             $('#' + id + '5').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '5 img').removeClass("cardPile")
+            $('#' + id + '5 img').removeClass("cardPile");
 
 
             aceArray[4].push(splitCard);
@@ -669,10 +669,10 @@ $(function () {
 
 
 
-            $('#' + id + '5 img').addClass("offsetLeft")
+            $('#' + id + '5 img').addClass("offsetLeft");
             $("#" + id + "5").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -683,7 +683,7 @@ $(function () {
           $("#" + id + "6").click(function () {
 
             $('#' + id + '6').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '6 img').removeClass("cardPile")
+            $('#' + id + '6 img').removeClass("cardPile");
 
 
             aceArray[5].push(splitCard);
@@ -691,10 +691,10 @@ $(function () {
 
 
 
-            $('#' + id + '6 img').addClass("offsetLeft")
+            $('#' + id + '6 img').addClass("offsetLeft");
             $("#" + id + "6").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -705,7 +705,7 @@ $(function () {
           $("#" + id + "7").click(function () {
 
             $('#' + id + '7').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '7 img').removeClass("cardPile")
+            $('#' + id + '7 img').removeClass("cardPile");
 
 
             aceArray[6].push(splitCard);
@@ -713,10 +713,10 @@ $(function () {
 
 
 
-            $('#' + id + '7 img').addClass("offsetLeft")
+            $('#' + id + '7 img').addClass("offsetLeft");
             $("#" + id + "7").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
         }
@@ -727,7 +727,7 @@ $(function () {
           $("#" + id + "8").click(function () {
 
             $('#' + id + '8').append( $('#player' + playerTurn + pileType + '>img:last-child') );
-            $('#' + id + '8 img').removeClass("cardPile")
+            $('#' + id + '8 img').removeClass("cardPile");
 
 
             aceArray[7].push(splitCard);
@@ -735,10 +735,10 @@ $(function () {
 
 
 
-            $('#' + id + '8 img').addClass("offsetLeft")
+            $('#' + id + '8 img').addClass("offsetLeft");
             $("#" + id + "8").off("click");
-            removePlayedCard(unusedDeck)
-            return aceArray
+            removePlayedCard(unusedDeck);
+            return aceArray;
 
           });
       }
